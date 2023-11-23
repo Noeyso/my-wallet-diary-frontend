@@ -1,10 +1,37 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
-export const Flex = styled.div<{ fullW?: boolean; fullH?: boolean }>`
+export const Flex = styled.div<{
+	fullW?: boolean;
+	fullH?: boolean;
+	gap?: number;
+	padding?: number | string;
+	margin?: number | string;
+	paddingTop?: number;
+	paddingBottom?: number;
+	paddingLeft?: number;
+	paddingRight?: number;
+	marginTop?: number;
+	marginBottom?: number;
+	marginLeft?: number;
+	marginRight?: number;
+	flex?: number;
+}>`
 	display: flex;
 	width: ${({ fullW }) => (fullW ? "100%" : "auto")};
 	height: ${({ fullH }) => (fullH ? "100%" : "auto")};
+	gap: ${({ gap }) => gap}rem;
+	padding: ${({ padding }) => (typeof padding === "number" ? `${padding}rem` : padding)};
+	margin: ${({ margin }) => (typeof margin === "number" ? `${margin}rem` : margin)};
+	padding-top: ${({ paddingTop }) => paddingTop}rem;
+	padding-bottom: ${({ paddingBottom }) => paddingBottom}rem;
+	padding-left: ${({ paddingLeft }) => paddingLeft}rem;
+	padding-right: ${({ paddingRight }) => paddingRight}rem;
+	margin-top: ${({ marginTop }) => marginTop}rem;
+	margin-bottom: ${({ marginBottom }) => marginBottom}rem;
+	margin-left: ${({ marginLeft }) => marginLeft}rem;
+	margin-right: ${({ marginRight }) => marginRight}rem;
+	flex: ${({ flex }) => flex};
 `;
 
 export const FlexCenterV = styled(Flex)`
