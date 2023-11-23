@@ -6,6 +6,9 @@ import { FlexCenter, FlexCenterV, FlexColumn, FlexColumnCenterV } from "../style
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import useModal from "../hooks/useModal";
+import AlertModal from "../components/modal/AlertModal";
+import { ErrorMessage } from "../styles/text";
 
 export const Container = styled.div`
 	display: flex;
@@ -66,6 +69,8 @@ export const Button = styled.button`
 `;
 
 const signin = () => {
+	const { openModal } = useModal();
+
 	const {
 		register,
 		handleSubmit,
@@ -88,7 +93,8 @@ const signin = () => {
 			console.log(res.data);
 			const { flag, token } = res.data;
 			if (!flag) {
-				router.push("/signup");
+				// router.push("/signup");
+				openModal(() => <AlertModal content={"로그인 정보 없음 "} />);
 			} else {
 				localStorage.setItem("token", token);
 				router.push("/");
@@ -112,7 +118,7 @@ const signin = () => {
 							placeholder="아이디를 입력하세요."
 							{...register("id", { required: "아이디를 입력해주세요." })}
 						/>
-						{errors.id && <span>{errors.id.message}</span>}
+						{errors.id && <ErrorMessage>{errors.id.message}</ErrorMessage>}
 					</FlexColumnCenterV>
 					<FlexColumnCenterV fullW>
 						<Label>비밀번호</Label>
@@ -121,7 +127,7 @@ const signin = () => {
 							placeholder="비밀번호를 입력하세요."
 							{...register("pw", { required: "비밀번호를 입력해주세요." })}
 						/>
-						{errors.pw && <span>{errors.pw.message}</span>}
+						{errors.pw && <ErrorMessage>{errors.pw.message}</ErrorMessage>}
 					</FlexColumnCenterV>
 				</FlexColumnCenterV>
 				<FlexColumnCenterV gap={2} flex={1}>

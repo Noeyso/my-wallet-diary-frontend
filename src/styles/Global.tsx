@@ -22,6 +22,21 @@ const styles = (theme) => css`
 		border: 2px solid ${theme.color.black};
 		box-shadow: 0px 5px 8.5px 3px rgba(0, 0, 0, 0.25);
 	}
+
+	button {
+		border: none;
+		background: none;
+		cursor: pointer;
+		transition: all 0.3s ease-in-out;
+
+		:hover {
+			transform: scale(1.01);
+		}
+
+		:active {
+			transform: translateY(4px);
+		}
+	}
 `;
 
 const GlobalStyle = () => <Global styles={styles} />;

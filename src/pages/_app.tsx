@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import SignLayout from "../components/layout/SignLayout";
 import MainLayout from "../components/layout/MainLayout";
 import { useEffect } from "react";
+import ModalsProvider from "../context/ModalsProvider";
+import Modals from "../components/modal/Modals";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
@@ -39,7 +41,10 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<ThemeProvider theme={theme}>
 			<GlobalStyle />
-			{layout(<Component {...pageProps} />)}
+			<ModalsProvider>
+				<Modals />
+				<>{layout(<Component {...pageProps} />)}</>
+			</ModalsProvider>
 		</ThemeProvider>
 	);
 }
