@@ -1,7 +1,6 @@
 import { ThemeProvider } from "@emotion/react";
 import GlobalStyle from "../styles/Global";
 import theme from "../styles/theme";
-import Header from "../components/Header";
 import { useRouter } from "next/router";
 import SignLayout from "../components/layout/SignLayout";
 import MainLayout from "../components/layout/MainLayout";
@@ -9,6 +8,23 @@ import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
+
+	useEffect(() => {
+		const isLoggedIn = checkLoginStatus(); // Implement this function
+
+		if (!isLoggedIn && !router.pathname.includes("sign")) {
+			router.push("/signin");
+		} else if (isLoggedIn) {
+			// Redirect to the main page if logged in and on the login or default page
+			router.push("/main");
+		}
+	}, [router]);
+
+	const checkLoginStatus = () => {
+		const token = localStorage.getItem("token");
+		if (token) return true;
+		return false;
+	};
 
 	// Determine the layout based on the route
 	const getLayout = () => {

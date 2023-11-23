@@ -79,15 +79,10 @@ const signin = () => {
 	const login = async () => {
 		console.log("login");
 		try {
-			// const rgetes = await axios.get("http://localhost:5000", {});
 			const param = {
-				id: "123",
-				password: "123",
+				id: watch("id"),
+				password: watch("pw"),
 			};
-			// const param = new URLSearchParams({
-			// 	id: "123",
-			// 	password: "123",
-			// });
 			const res = await axios.post("http://localhost:5000/signin", param);
 
 			console.log(res.data);
