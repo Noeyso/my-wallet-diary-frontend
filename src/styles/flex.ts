@@ -16,6 +16,7 @@ export const Flex = styled.div<{
 	marginLeft?: number;
 	marginRight?: number;
 	flex?: number;
+	justifyContent?: "center" | "flex-start" | "flex-end" | "space-between" | "space-around";
 }>`
 	display: flex;
 	width: ${({ fullW }) => (fullW ? "100%" : "auto")};
@@ -32,6 +33,7 @@ export const Flex = styled.div<{
 	margin-left: ${({ marginLeft }) => marginLeft}rem;
 	margin-right: ${({ marginRight }) => marginRight}rem;
 	flex: ${({ flex }) => flex};
+	justify-content: ${({ justifyContent }) => justifyContent};
 `;
 
 export const FlexCenterV = styled(Flex)`

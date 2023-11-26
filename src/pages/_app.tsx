@@ -12,12 +12,11 @@ function MyApp({ Component, pageProps }) {
 	const router = useRouter();
 
 	useEffect(() => {
-		const isLoggedIn = checkLoginStatus(); // Implement this function
+		const isLoggedIn = checkLoginStatus();
 
 		if (!isLoggedIn && !router.pathname.includes("sign")) {
 			router.push("/signin");
 		} else if (isLoggedIn) {
-			// Redirect to the main page if logged in and on the login or default page
 			router.push("/main");
 		}
 	}, [router]);
@@ -28,14 +27,12 @@ function MyApp({ Component, pageProps }) {
 		return false;
 	};
 
-	// Determine the layout based on the route
 	const getLayout = () => {
 		if (router.pathname.startsWith("/signin") || router.pathname.startsWith("/signup")) {
 			return (page) => <SignLayout>{page}</SignLayout>;
 		}
 		return (page) => <MainLayout>{page}</MainLayout>;
 	};
-	// Apply the layout
 	const layout = getLayout();
 
 	return (

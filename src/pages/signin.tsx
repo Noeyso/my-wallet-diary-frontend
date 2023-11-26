@@ -1,14 +1,13 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { FlexCenter, FlexCenterV, FlexColumn, FlexColumnCenterV } from "../styles/flex";
+import { FlexColumnCenterV } from "../styles/flex";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import useModal from "../hooks/useModal";
 import AlertModal from "../components/modal/AlertModal";
-import { ErrorMessage } from "../styles/text";
+import { StatusMessage } from "../styles/text";
 
 export const Container = styled.div`
 	display: flex;
@@ -32,18 +31,19 @@ export const Label = styled.label`
 	font-weight: 700;
 	line-height: normal;
 `;
-export const Input = styled.input`
+export const Input = styled.input<{ isError?: boolean }>`
 	width: 100%;
 	height: 3rem;
 	border: none;
-	border-bottom: 5px solid #aeaeae;
+	border-bottom: 5px solid ${({ isError }) => (isError ? "#DC0000" : "#aeaeae")};
 	font-size: 18px;
 	:focus {
 		outline: none;
+		border-bottom: 5px solid ${({ isError }) => (isError ? "#DC0000" : "#ebe2f6")};
 	}
 `;
 
-export const Button = styled.button`
+export const SignButton = styled.button`
 	width: 100%;
 	height: 3rem;
 	border: 2px solid #000;
@@ -77,12 +77,11 @@ const signin = () => {
 		watch,
 		formState: { isSubmitting, isSubmitted, errors },
 		getValues,
-	} = useForm<{ id: string; pw: string }>({ mode: "onSubmit" });
+	} = useForm<{ id: string; pw: string }>({ mode: "onChange" });
 
 	const router = useRouter();
 
 	const login = async () => {
-		console.log("login");
 		try {
 			const param = {
 				id: watch("id"),
@@ -90,7 +89,6 @@ const signin = () => {
 			};
 			const res = await axios.post("http://localhost:5000/signin", param);
 
-			console.log(res.data);
 			const { flag, token } = res.data;
 			if (!flag) {
 				// router.push("/signup");
@@ -104,7 +102,6 @@ const signin = () => {
 		}
 	};
 	const onSubmit = () => {
-		console.log("onsubmit");
 		login();
 	};
 	return (
@@ -118,7 +115,7 @@ const signin = () => {
 							placeholder="아이디를 입력하세요."
 							{...register("id", { required: "아이디를 입력해주세요." })}
 						/>
-						{errors.id && <ErrorMessage>{errors.id.message}</ErrorMessage>}
+						{errors.id && <StatusMessage>{errors.id.message}</StatusMessage>}
 					</FlexColumnCenterV>
 					<FlexColumnCenterV fullW>
 						<Label>비밀번호</Label>
@@ -127,11 +124,11 @@ const signin = () => {
 							placeholder="비밀번호를 입력하세요."
 							{...register("pw", { required: "비밀번호를 입력해주세요." })}
 						/>
-						{errors.pw && <ErrorMessage>{errors.pw.message}</ErrorMessage>}
+						{errors.pw && <StatusMessage>{errors.pw.message}</StatusMessage>}
 					</FlexColumnCenterV>
 				</FlexColumnCenterV>
 				<FlexColumnCenterV gap={2} flex={1}>
-					<Button type="submit">로그인</Button>
+					<SignButton type="submit">로그인</SignButton>
 					<span style={{ width: "100%", textAlign: "center" }}>
 						계정이 없으신가요? <Link href="/signup">가입</Link>
 					</span>

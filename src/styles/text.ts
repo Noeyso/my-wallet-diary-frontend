@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
-export const Text = styled.span`
-	color: #222;
+export const Text = styled.span<{ color?: string }>`
+	color: ${({ color, theme }) => color || "#222"};
 	text-align: center;
 	font-family: Noto Sans;
 	font-size: 1.125rem;
@@ -15,10 +15,11 @@ export const Text = styled.span`
 	user-select: none; /* 표준 구문 */
 `;
 
-export const ErrorMessage = styled(Text)`
+export const StatusMessage = styled(Text)<{ status?: "valid" | "invalid" | "warning" | "info" }>`
 	text-align: center;
 	font-weight: 400;
 	font-size: 0.875rem;
 	text-align: start;
-	color: ${({ theme }) => theme.color.red};
+	color: ${({ status, theme }) => (status ? (status === "valid" ? "#0C9300" : theme.color.red) : theme.color.red)};
+	padding-top: 0.5rem;
 `;

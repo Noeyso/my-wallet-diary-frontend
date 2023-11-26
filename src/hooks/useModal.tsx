@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ModalsDispatchContext } from "../context/ModalsContext";
+import AlertModal from "../components/modal/AlertModal";
 
 const useModal = () => {
 	const { open, close, closeLast } = useContext(ModalsDispatchContext);
@@ -14,10 +15,15 @@ const useModal = () => {
 	const closeLastModal = () => {
 		closeLast();
 	};
+
+	const openAlertModal = (message: string, props?: any) => {
+		open(() => <AlertModal content={message} />, props);
+	};
 	return {
 		openModal,
 		closeModal,
 		closeLastModal,
+		openAlertModal,
 	};
 };
 export default useModal;
